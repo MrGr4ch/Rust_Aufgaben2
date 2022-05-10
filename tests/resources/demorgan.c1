@@ -1,0 +1,70 @@
+/* Ueberprueft deMorgans Law */
+
+// Die erwartete Ausgabe steht am Ende dieser Datei
+
+bool not(bool b) {
+	if (b == true) return false;
+	else return true;
+}
+
+bool morgan11(bool a, bool b) {
+	return not(a || b);
+}
+bool morgan12(bool a, bool b) {
+	return not(a) && not(b);
+}
+
+bool morgan21(bool a, bool b) {
+	return not(a && b);
+}
+bool morgan22(bool a, bool b) {
+	return not(a) || not(b);
+}
+
+void main() {
+	bool a = true;
+	bool b = true;
+	int i=0;
+
+    printf("Testing deMorgans Law");
+
+	do {
+		do {
+
+			printf(i);
+			
+			printf(morgan11(a,b));
+			printf(morgan12(a,b));
+			printf(morgan21(a,b));
+			printf(morgan22(a,b));
+			
+			i = i+1;
+			b = not(b);
+		} while (b != true);
+		a = not(a);
+	} while(a != true);
+
+}
+
+/* Erwartete Ausgabe:
+0
+false
+false
+false
+false
+1
+false
+false
+true
+true
+2
+false
+false
+true
+true
+3
+true
+true
+true
+true
+*/

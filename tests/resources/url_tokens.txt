@@ -1,0 +1,2 @@
+LinkUrl("http://www2.informatik.hu-berlin.de/sam"): LinkText("Lehrstuhlseiten - sollten ausgegeben werden.")
+LinkUrl("http://www.userfriendly.org"): LinkText("Userfriendly - sollte jeder Informatiker kennen (und daher sollte dieser Text auch ausgegeben werden :-)")
