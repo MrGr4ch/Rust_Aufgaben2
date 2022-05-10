@@ -18,6 +18,8 @@ fn url_lexer() -> Result<(), Box<dyn Error>> {
         tokens.push(parse_result);
     }
 
+    assert_eq!(tokens.len(), 2);
+
     for (parsed, expected) in tokens.iter().zip(expected_tokens.lines()) {
         assert_eq!(parsed, expected);
     }
