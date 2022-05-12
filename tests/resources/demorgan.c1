@@ -21,6 +21,13 @@ bool morgan22(bool a, bool b) {
 	return not(a) || not(b);
 }
 
+float dummyFloat(float a) {
+    float b = 1.0;
+    float c = .5;
+    float d = 1e10;
+    return a * 1.2f;
+}
+
 void main() {
 	bool a = true;
 	bool b = true;
