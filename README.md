@@ -48,7 +48,7 @@ Zur Vereinfachung der Analyse gelten folgende Konventionen:
 
 - der Eingabestrom ist valides xhtml, das keinen CDATA Abschnitt enthält. Die Links haben das Format <a ... href="URL" ... >LINKTEXT</a>, wobei im schließenden Tag nach dem 'a' null oder mehr Leerzeichen und Newlines stehen dürfen. Innerhalb des öffnenden Tags dürfen vor und nach href weitere Attribute auftreten, die überlesen werden
 - Newlines innerhalb von LINKTEXT gehören zum Linktext. D.h. alles innerhalb des a-Tags gehört zum Linktext
-- zwischen <a ...> und </a> treten keine anderen Tags auf
+- zwischen <a ...> und <\/a> treten keine anderen Tags auf
 - a-Tags, die kein href-Attribut beinhalten, werden komplett ignoriert
 - die Eingabe enthält keinerlei Kommentare
 
