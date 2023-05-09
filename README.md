@@ -4,7 +4,7 @@ Diese beiden Aufgaben dienen dem Einstieg in die Zerlegung von Text mit der [log
 Sie implementieren die lexikalische Analyse für unseren Praktikumsinterpreter der Sprache C1. 
 
 ## Allgemeine Hinweise
-Für diese und alle folgenden Praktikumsaufgaben gilt, dass Einsendungen, die in der jeweils mitgegebenen Testumgebung nicht laufen, mit null Punkten bewertet werden! 
+Für diese und alle folgenden Praktikumsaufgaben gilt, dass Einsendungen, die in der jeweils mitgegebenen Testumgebung nicht laufen, Punktabzug erhalten! 
 Das beinhaltet insbesondere alle Programme, die sich nicht fehlerfrei kompilieren lassen. 
 Da Cargo für die Ausführung verantwortlich ist, sollte das Projekt bei Ihnen am Ende mit `cargo test` ohne Fehler und Warnungen durchlaufen.
 
