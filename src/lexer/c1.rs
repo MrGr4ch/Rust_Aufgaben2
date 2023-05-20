@@ -1,6 +1,7 @@
 use logos::Logos;
 
 #[derive(Logos, Debug, PartialEq)]
+#[logos(skip r"[ \t\n\f]+")]
 pub enum C1Token {
     // TODO: Define variants and their token/regex
 
@@ -71,20 +72,26 @@ pub enum C1Token {
     C1rightbrace,
 
     //pseudotoken
-    #[regex("[0-9]")]
-    Digit,
-    #[regex("[:Digit:]+")]
-    Integer,
-    #[regex("[:Integer:].[:Integer:]|.[:Integer:]")]
-    Float,
-    #[regex("[a-zA-z]")]
-    Letter,
+    //#[regex("[0-9]")]
+    //Digit,
+    //#[regex("[:Digit:]+")]
+    //Integer,
+    //#[regex("[:Integer:].[:Integer:]|.[:Integer:]")]
+    //Float,
+    //#[regex("[a-zA-z]")]
+    //Letter,
 
     //termvariables
-    #[regex("[:Integer:]")]
+    #[regex("[0-9]+")]
     ConstInt,
-    #[regex("[:Float:]")]
-
+    #[regex("([0-9]* [.] [0-9]+) ( [eE] ([-+])? [0-9]+)? | [0-9]+ [eE] ([+-])? [0-9]+")]
+    ConstFloat,
+    #[regex("true|false")]
+    ConstBool,
+    #[regex("\" [^\n\"]* \"")]
+    ConstString,
+    #[regex("([a-zA-z])+ ([0-9] | [a-zA-z])*")]
+    Id,
 
 
 
