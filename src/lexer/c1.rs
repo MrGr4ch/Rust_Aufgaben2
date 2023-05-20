@@ -1,9 +1,11 @@
-use logos::Logos;
+use logos::{Logos, Skip};
 
 #[derive(Logos, Debug, PartialEq)]
-#[logos(skip r"[ \t\n\f]+")]
 pub enum C1Token {
     // TODO: Define variants and their token/regex
+
+    //Whitespace
+    #[regex(" |\t|\n|\r|", |_| Skip)]
 
     //keywords
     #[token("bool")]
