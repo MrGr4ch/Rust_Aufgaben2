@@ -5,7 +5,7 @@ pub enum C1Token {
     // TODO: Define variants and their token/regex
 
     //Whitespace
-    #[regex(" |\t|\n|\r|", |_| Skip)]
+    #[regex(r"[ \t\n\f\r]+", logos::skip)]
 
     //keywords
     #[token("bool")]
@@ -95,7 +95,9 @@ pub enum C1Token {
     #[regex("([a-zA-z])+ ([0-9] | [a-zA-z])*")]
     Id,
 
-
+    //comments
+    #[regex("([/][*])(.|\n)([*][/])", |_| Skip)]
+    #[regex("([/][*])(.)(\n)", |_| Skip)]
 
     // Logos requires one token variant to handle errors,
     // it can be named anything you wish.
