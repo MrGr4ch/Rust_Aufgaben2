@@ -1,106 +1,106 @@
-use logos::{Logos, Skip};
+use logos::Logos;
 
 #[derive(Logos, Debug, PartialEq)]
 pub enum C1Token {
-    // TODO: Define variants and their token/regex
-
-    //Whitespace
-    #[regex(r"[ \t\n\f\r]+", logos::skip)]
-
-    //keywords
+    // Keywords
     #[token("bool")]
-    C1bool,
-    #[token("do")]
-    C1do,
-    #[token("while")]
-    C1while,
-    #[token("else")]
-    C1else,
+    Bool,
+
     #[token("float")]
-    C1float,
-    #[token("for")]
-    C1for,
-    #[token("if")]
-    C1if,
+    Float,
+
     #[token("int")]
-    C1int,
-    #[token("printf")]
-    C1printf,
+    Int,
+
+    #[token("if")]
+    If,
+
+    #[token("otherwise")]
+    Otherwise,
+
+    #[token("do")]
+    Do,
+
+    #[token("while")]
+    While,
+
     #[token("return")]
-    C1return,
+    Return,
+
+    #[token("true")]
+    True,
+
+    #[token("false")]
+    False,
+
     #[token("void")]
-    C1void,
+    Void,
 
-    //operators
-    #[token("+")]
-    C1plus,
-    #[token("-")]
-    C1minus,
-    #[token("*")]
-    C1asterisk,
-    #[token("/")]
-    C1slash,
-    #[token("=")]
-    C1assign,
-    #[token("==")]
-    C1equal,
-    #[token("!=")]
-    C1notequal,
-    #[token("<")]
-    C1lessthan,
-    #[token(">")]
-    C1greaterthan,
-    #[token("<=")]
-    C1lessequal,
-    #[token(">=")]
-    C1greaterequal,
+    #[token("main")]
+    Main,
+
+    // Operators
     #[token("&&")]
-    C1and,
+    And,
+
     #[token("||")]
-    C1or,
+    Or,
 
-    //other tokens
-    #[token(",")]
-    C1comma,
-    #[token(";")]
-    C1semicolon,
+    #[token("==")]
+    Equal,
+
+    #[token("!=")]
+    NotEqual,
+
+    #[token("!")]
+    Not,
+
+    #[token("+")]
+    Plus,
+
+    #[token("*")]
+    Multiply,
+
+    #[token("=")]
+    Assign,
+
+    // Identifiers (function names, variable names)
+    #[regex("[a-zA-Z_][a-zA-Z0-9_]*", logos::skip)]
+    Identifier,
+
+    // Numeric literals
+    #[regex(r"[0-9]+", |lex| lex.slice().parse())]
+    IntegerLiteral,
+
+    // Float literals
+    #[regex(r"[0-9]*\.[0-9]+([eE][+-]?[0-9]+)?", |lex| lex.slice().parse())]
+    FloatLiteral,
+
+    // Parentheses and braces
     #[token("(")]
-    C1leftparen,
+    LParen,
+
     #[token(")")]
-    C1rightparen,
+    RParen,
+
     #[token("{")]
-    C1leftbrace,
+    LBrace,
+
     #[token("}")]
-    C1rightbrace,
+    RBrace,
 
-    //pseudotoken
-    //#[regex("[0-9]")]
-    //Digit,
-    //#[regex("[:Digit:]+")]
-    //Integer,
-    //#[regex("[:Integer:].[:Integer:]|.[:Integer:]")]
-    //Float,
-    //#[regex("[a-zA-z]")]
-    //Letter,
+    // C and C++ style comments
+    #[regex(r"/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/")]
+    Comment,
 
-    //termvariables
-    #[regex("[0-9]+")]
-    ConstInt,
-    #[regex("([0-9]* [.] [0-9]+) ( [eE] ([-+])? [0-9]+)? | [0-9]+ [eE] ([+-])? [0-9]+")]
-    ConstFloat,
-    #[regex("true|false")]
-    ConstBool,
-    #[regex("\" [^\n\"]* \"")]
-    ConstString,
-    #[regex("([a-zA-z])+ ([0-9] | [a-zA-z])*")]
-    Id,
+    #[regex(r"//.*", logos::skip)]
+    CommentCpp,
 
-    //comments
-    #[regex("([/][*])(.|\n)([*][/])", |_| Skip)]
-    #[regex("([/][*])(.)(\n)", |_| Skip)]
+    // Whitespaces
+    #[regex(r"[ \t\n\f\r]+", logos::skip)]
+    Whitespace,
 
-    // Logos requires one token variant to handle errors,
-    // it can be named anything you wish.
+    // Error handling
     #[error]
     Error,
 }
