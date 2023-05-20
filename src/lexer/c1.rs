@@ -3,49 +3,88 @@ use logos::Logos;
 #[derive(Logos, Debug, PartialEq)]
 pub enum C1Token {
     // TODO: Define variants and their token/regex
+
+    //keywords
     #[token("bool")]
-    c1bool,
+    C1bool,
     #[token("do")]
-    c1do,
+    C1do,
     #[token("while")]
-    c1while,
+    C1while,
     #[token("else")]
-    c1else,
+    C1else,
     #[token("float")]
-    c1float,
+    C1float,
     #[token("for")]
-    c1for,
+    C1for,
     #[token("if")]
-    c1if,
+    C1if,
     #[token("int")]
-    c1int,
+    C1int,
     #[token("printf")]
-    c1printf,
+    C1printf,
     #[token("return")]
-    c1return,
+    C1return,
     #[token("void")]
-    c1void,
+    C1void,
+
+    //operators
     #[token("+")]
-    c1plus,
+    C1plus,
     #[token("-")]
-    c1minus,
+    C1minus,
     #[token("*")]
-    c1asterisk,
+    C1asterisk,
     #[token("/")]
-    c1slash,
+    C1slash,
     #[token("=")]
-    c1assign,
+    C1assign,
     #[token("==")]
-    c1equal,
+    C1equal,
     #[token("!=")]
-    c1notequal,
+    C1notequal,
     #[token("<")]
-    c1lessthan,
+    C1lessthan,
     #[token(">")]
-    c1greaterthan,
+    C1greaterthan,
     #[token("<=")]
-    c1lessequal,
-    #[token]
+    C1lessequal,
+    #[token(">=")]
+    C1greaterequal,
+    #[token("&&")]
+    C1and,
+    #[token("||")]
+    C1or,
+
+    //other tokens
+    #[token(",")]
+    C1comma,
+    #[token(";")]
+    C1semicolon,
+    #[token("(")]
+    C1leftparen,
+    #[token(")")]
+    C1rightparen,
+    #[token("{")]
+    C1leftbrace,
+    #[token("}")]
+    C1rightbrace,
+
+    //pseudotoken
+    #[regex("[0-9]")]
+    Digit,
+    #[regex("[:Digit:]+")]
+    Integer,
+    #[regex("[:Integer:].[:Integer:]|.[:Integer:]")]
+    Float,
+    #[regex("[a-zA-z]")]
+    Letter,
+
+    //termvariables
+    #[regex("[:Integer:]")]
+    ConstInt,
+    #[regex("[:Float:]")]
+
 
 
 
