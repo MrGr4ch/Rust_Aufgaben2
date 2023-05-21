@@ -1,4 +1,4 @@
-se logos::{Lexer, Logos, Source};
+use logos::{Lexer, Logos, Source};
 use std::fmt::{Display, Formatter};
 
 /// Tuple struct for link URLs
@@ -38,10 +38,12 @@ pub enum URLToken {
 
 /// Extracts the URL and text from a string that matched a Link token
 fn extract_link_info(lex: &mut Lexer<URLToken>) -> (LinkUrl, LinkText) {
-    let caps = lex.extras.captures.as_ref().unwrap(); // Get the captures
+    let token_slice = lex.slice();
 
-    let url = caps.get(1).unwrap().as_str(); // Get the URL
-    let text = caps.get(2).unwrap().as_str(); // Get the link text
+    let last_quote = token_slice.rfind('"').unwrap();
+    let (url, text) = token_slice.split_at(last_quote + 1);  // +1 to exclude the quote itself from the URL
+    let url = url.trim_end_matches('"'); // remove ending quote from URL
+    let text = text.trim_start_matches(' '); // remove leading whitespace from text
 
     (LinkUrl(url.into()), LinkText(text.into()))
 }
