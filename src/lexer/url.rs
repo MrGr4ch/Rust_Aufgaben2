@@ -22,10 +22,11 @@ impl Display for LinkText {
         self.0.fmt(f)
     }
 }
-
+              
+        
 #[derive(Logos, Debug, PartialEq)]
 pub enum URLToken {
-    #[regex(r#"<a[ \n]*[^>]*href\s*=\s*""#, extract_link_info)]
+    #[regex(r#"<a[ \n][^>]href\s=\s""#, extract_link_info)]
     LinkStart,
 
     #[regex(r#"">"#)]
@@ -37,8 +38,8 @@ pub enum URLToken {
     #[error]
     Error,
 }
-
-
+        
+        
 /// Extracts the URL and text from a string that matched a Link token
 fn extract_link_info(lex: &mut Lexer<URLToken>) -> (LinkUrl, LinkText) {
     let token_slice = lex.slice();
