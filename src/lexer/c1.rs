@@ -2,9 +2,8 @@ use logos::{Logos, Skip};
 
 #[derive(Logos, Debug, PartialEq)]
 pub enum C1Token {
-  
     //Whitespace
-    #[regex(r"[ \t\n\r]+", skip)]
+    #[regex(r"[ \t\n\r]+", |_| Skip)]
 
     //keywords
     #[token("bool")]
@@ -30,6 +29,7 @@ pub enum C1Token {
     #[token("void")]
     KwVoid,
 
+    //operators
     #[token("+")]
     Plus,
     #[token("-")]
