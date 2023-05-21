@@ -1,4 +1,4 @@
-use logos::{Lexer, Logos, Source};
+se logos::{Lexer, Logos, Source};
 use std::fmt::{Display, Formatter};
 
 /// Tuple struct for link URLs
@@ -22,15 +22,11 @@ impl Display for LinkText {
         self.0.fmt(f)
     }
 }
-              
-        
+
 #[derive(Logos, Debug, PartialEq)]
 pub enum URLToken {
-    #[regex(r#"<a[ \n][^>]href\s=\s""#, extract_link_info)]
-    LinkStart,
-
-    #[regex(r#"">"#)]
-    LinkEnd,
+    #[regex(r#"<a[ \n]*[^>]*href\s*=\s*"([^"]*)"[^>]*>([^<]*)</a>"#, extract_link_info)]
+    Link((LinkUrl, LinkText)),
 
     #[regex(r"[ \t\n\f\r]+", logos::skip)] // Ignore whitespaces
     Ignored,
@@ -38,16 +34,14 @@ pub enum URLToken {
     #[error]
     Error,
 }
-        
-        
+
+
 /// Extracts the URL and text from a string that matched a Link token
 fn extract_link_info(lex: &mut Lexer<URLToken>) -> (LinkUrl, LinkText) {
-    let token_slice = lex.slice();
+    let caps = lex.extras.captures.as_ref().unwrap(); // Get the captures
 
-    let last_quote = token_slice.rfind('"').unwrap();
-    let (url, text) = token_slice.split_at(last_quote + 1);  // +1 to exclude the quote itself from the URL
-    let url = url.trim_end_matches('"'); // remove ending quote from URL
-    let text = text.trim_start_matches(' '); // remove leading whitespace from text
+    let url = caps.get(1).unwrap().as_str(); // Get the URL
+    let text = caps.get(2).unwrap().as_str(); // Get the link text
 
     (LinkUrl(url.into()), LinkText(text.into()))
 }
