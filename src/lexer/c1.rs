@@ -9,69 +9,69 @@ pub enum C1Token {
 
     //keywords
     #[token("bool")]
-    C1bool,
+    KwBoolean,
     #[token("do")]
-    C1do,
+    KwDo,
     #[token("while")]
-    C1while,
+    KwWhile,
     #[token("else")]
-    C1else,
+    KwElse,
     #[token("float")]
-    C1float,
+    KwFloat,
     #[token("for")]
-    C1for,
+    KwFor,
     #[token("if")]
-    C1if,
+    KwIf,
     #[token("int")]
-    C1int,
+    KwInt,
     #[token("printf")]
-    C1printf,
+    KwPrintf,
     #[token("return")]
-    C1return,
+    KwReturn,
     #[token("void")]
-    C1void,
+    KwVoid,
 
     //operators
     #[token("+")]
-    C1plus,
+    Plus,
     #[token("-")]
-    C1minus,
+    Minus,
     #[token("*")]
-    C1asterisk,
+    Asterisk,
     #[token("/")]
-    C1slash,
+    Slash,
     #[token("=")]
-    C1assign,
+    Assign,
     #[token("==")]
-    C1equal,
+    Eq,
     #[token("!=")]
-    C1notequal,
+    Neq,
     #[token("<")]
-    C1lessthan,
+    Lss,
     #[token(">")]
-    C1greaterthan,
+    Grt,
     #[token("<=")]
-    C1lessequal,
+    Leq,
     #[token(">=")]
-    C1greaterequal,
+    Geq,
     #[token("&&")]
-    C1and,
+    And,
     #[token("||")]
-    C1or,
+    Or,
 
     //other tokens
     #[token(",")]
-    C1comma,
+    Comma,
     #[token(";")]
-    C1semicolon,
+    Semicolon,
     #[token("(")]
-    C1leftparen,
+    LParen,
     #[token(")")]
-    C1rightparen,
+    RParen,
     #[token("{")]
-    C1leftbrace,
+    LBrace,
     #[token("}")]
-    C1rightbrace,
+    RBrace,
 
     //pseudotoken
     //#[regex("[0-9]")]
@@ -89,7 +89,7 @@ pub enum C1Token {
     #[regex("([0-9]*[.][0-9]+)([eE]([-+])?[0-9]+)?|[0-9]+[eE]([+-])?[0-9]+")]
     ConstFloat,
     #[regex("true|false")]
-    ConstBool,
+    ConstBoolean,
     #[regex("\"[^\n\"]*\"")]
     ConstString,
     #[regex("([a-zA-z])+([0-9]|[a-zA-z])*")]
