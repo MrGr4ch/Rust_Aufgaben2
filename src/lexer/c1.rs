@@ -84,13 +84,13 @@ pub enum C1Token {
     //termvariables
     #[regex("[0-9]+")]
     ConstInt,
-    #[regex("([0-9]*[.][0-9]+)([eE]([-+])?[0-9]+)?|[0-9]+[eE]([+-])?[0-9]+")]
+    #[regex(r"[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?")]
     ConstFloat,
     #[regex("true|false")]
     ConstBoolean,
     #[regex("\"[^\n\"]*\"")]
     ConstString,
-    #[regex("([a-zA-z])+([0-9]|[a-zA-z])*")]
+    #[regex("([a-zA-Z_])+([0-9]|[a-zA-Z_])*")]
     Id,
 
     //comments
