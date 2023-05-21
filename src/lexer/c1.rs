@@ -69,11 +69,11 @@ pub enum C1Token {
     Identifier,
 
     // Numeric literals
-    #[regex(r"[0-9]+", |lex| lex.slice().parse())]
-    IntegerLiteral,
+   #[regex(r"[0-9]+", |lex| lex.slice().parse::<usize>().ok())]
+	IntegerLiteral,
 
     // Float literals
-    #[regex(r"[0-9]*\.[0-9]+([eE][+-]?[0-9]+)?", |lex| lex.slice().parse())]
+    #[regex(r"[0-9]*\.[0-9]+([eE][+-]?[0-9]+)?", |lex| lex.slice().parse::<f64>().ok())]
     FloatLiteral,
 
     // Parentheses and braces
@@ -90,8 +90,9 @@ pub enum C1Token {
     RBrace,
 
     // C and C++ style comments
-    #[regex(r"/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/")]
-    Comment,
+    #[regex(r"/\*[^*]*\*/", logos::skip)] // C-style comments (non-multiline)
+	#[regex(r"//.*", logos::skip)] // C++-style comments
+	Comment,
 
     #[regex(r"//.*", logos::skip)]
     CommentCpp,
@@ -100,6 +101,10 @@ pub enum C1Token {
     #[regex(r"[ \t\n\f\r]+", logos::skip)]
     Whitespace,
 
+    // Ignored characters not allowed in C1
+	#[regex(r"[^a-zA-Z0-9_ \t\n\f\r+*/=!&|()]+", logos::skip)] // Ignore all non-C1 characters
+    Ignored,
+       
     // Error handling
     #[error]
     Error,
