@@ -1,106 +1,106 @@
-use logos::Logos;
+use logos::{Logos, Skip};
 
 #[derive(Logos, Debug, PartialEq)]
 pub enum C1Token {
-    // Keywords
+  
+    //Whitespace
+    #[regex(r"[ \t\n\r]+", skip)]
+
+    //keywords
     #[token("bool")]
-    Bool,
-
-    #[token("float")]
-    Float,
-
-    #[token("int")]
-    Int,
-
-    #[token("if")]
-    If,
-
-    #[token("otherwise")]
-    Otherwise,
-
+    KwBoolean,
     #[token("do")]
-    Do,
-
+    KwDo,
     #[token("while")]
-    While,
-
+    KwWhile,
+    #[token("else")]
+    KwElse,
+    #[token("float")]
+    KwFloat,
+    #[token("for")]
+    KwFor,
+    #[token("if")]
+    KwIf,
+    #[token("int")]
+    KwInt,
+    #[token("printf")]
+    KwPrintf,
     #[token("return")]
-    Return,
-
-    #[token("true")]
-    True,
-
-    #[token("false")]
-    False,
-
+    KwReturn,
     #[token("void")]
-    Void,
-
-    #[token("main")]
-    Main,
-
-    // Operators
-    #[token("&&")]
-    And,
-
-    #[token("||")]
-    Or,
-
-    #[token("==")]
-    Equal,
-
-    #[token("!=")]
-    NotEqual,
-
-    #[token("!")]
-    Not,
+    KwVoid,
 
     #[token("+")]
     Plus,
-
+    #[token("-")]
+    Minus,
     #[token("*")]
-    Multiply,
-
+    Asterisk,
+    #[token("/")]
+    Slash,
     #[token("=")]
     Assign,
+    #[token("==")]
+    Eq,
+    #[token("!=")]
+    Neq,
+    #[token("<")]
+    Lss,
+    #[token(">")]
+    Grt,
+    #[token("<=")]
+    Leq,
+    #[token(">=")]
+    Geq,
+    #[token("&&")]
+    And,
+    #[token("||")]
+    Or,
 
-    // Identifiers (function names, variable names)
-    #[regex("[a-zA-Z_][a-zA-Z0-9_]*", logos::skip)]
-    Identifier,
-
-    // Numeric literals
-    #[regex(r"[0-9]+", |lex| lex.slice().parse())]
-    IntegerLiteral,
-
-    // Float literals
-    #[regex(r"[0-9]*\.[0-9]+([eE][+-]?[0-9]+)?", |lex| lex.slice().parse())]
-    FloatLiteral,
-
-    // Parentheses and braces
+    //other tokens
+    #[token(",")]
+    Comma,
+    #[token(";")]
+    Semicolon,
     #[token("(")]
     LParen,
-
     #[token(")")]
     RParen,
-
     #[token("{")]
     LBrace,
-
     #[token("}")]
     RBrace,
 
-    // C and C++ style comments
-    #[regex(r"/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/")]
-    Comment,
+    //pseudotoken
+    //#[regex("[0-9]")]
+    //Digit,
+    //#[regex("[:Digit:]+")]
+    //Integer,
+    //#[regex("[:Integer:].[:Integer:]|.[:Integer:]")]
+    //Float,
+    //#[regex("[a-zA-z]")]
+    //Letter,
 
-    #[regex(r"//.*", logos::skip)]
-    CommentCpp,
+    //termvariables
+    #[regex("[0-9]+")]
+    ConstInt,
+    #[regex("([0-9]*[.][0-9]+)([eE]([-+])?[0-9]+)?|[0-9]+[eE]([+-])?[0-9]+")]
+    ConstFloat,
+    #[regex("true|false")]
+    ConstBoolean,
+    #[regex("\"[^\n\"]*\"")]
+    ConstString,
+    #[regex("([a-zA-z])+([0-9]|[a-zA-z])*")]
+    Id,
 
-    // Whitespaces
-    #[regex(r"[ \t\n\f\r]+", logos::skip)]
-    Whitespace,
+    //comments
+    #[regex("(?s)[/][*][^(/*)]*[*][/]", |_| Skip)]
+    CComment,
+    #[regex("//.*", |_| Skip)]
+    CplusplusComment,
 
-    // Error handling
+    // Logos requires one token variant to handle errors,
+    // it can be named anything you wish.
     #[error]
     Error,
 }
