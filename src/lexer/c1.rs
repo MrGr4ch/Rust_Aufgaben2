@@ -5,7 +5,7 @@ pub enum C1Token {
     // TODO: Define variants and their token/regex
 
     //Whitespace
-    #[regex(r"[ \t\n\f\r]+", logos::skip)]
+    #[regex(r"[ \t\n\r]+", logos::skip)]
 
     //keywords
     #[token("bool")]
@@ -86,18 +86,20 @@ pub enum C1Token {
     //termvariables
     #[regex("[0-9]+")]
     ConstInt,
-    #[regex("([0-9]* [.] [0-9]+) ( [eE] ([-+])? [0-9]+)? | [0-9]+ [eE] ([+-])? [0-9]+")]
+    #[regex("([0-9]*[.][0-9]+)([eE]([-+])?[0-9]+)?|[0-9]+[eE]([+-])?[0-9]+")]
     ConstFloat,
     #[regex("true|false")]
     ConstBool,
-    #[regex("\" [^\n\"]* \"")]
+    #[regex("\"[^\n\"]*\"")]
     ConstString,
-    #[regex("([a-zA-z])+ ([0-9] | [a-zA-z])*")]
+    #[regex("([a-zA-z])+([0-9]|[a-zA-z])*")]
     Id,
 
     //comments
-    #[regex("([/][*])(.|\n)([*][/])", |_| Skip)]
-    #[regex("([/][*])(.)(\n)", |_| Skip)]
+    #[regex("(?s)[/][*][^(/*)]*[*][/]", |_| Skip)]
+    CComment,
+    #[regex("//.*", |_| Skip)]
+    CplusplusComment,
 
     // Logos requires one token variant to handle errors,
     // it can be named anything you wish.
