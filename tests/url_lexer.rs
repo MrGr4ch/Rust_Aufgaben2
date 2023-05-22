@@ -9,7 +9,6 @@ fn url_lexer() -> Result<(), Box<dyn Error>> {
     let html_text = fs::read_to_string("tests/resources/urls.html")?;
     let expected_tokens = fs::read_to_string("tests/resources/url_tokens.txt")?;
 
-    println!("actualy printing");
     let mut lexer = URLToken::lexer(html_text.as_str());
     // Parse all tokens
     let mut tokens = Vec::new();
@@ -18,7 +17,7 @@ fn url_lexer() -> Result<(), Box<dyn Error>> {
         println!("{:?}: {:?}", url, text);
         tokens.push(parse_result);
     }
-    println!("actualy printing");
+
     assert_eq!(tokens.len(), 2);
 
     for (parsed, expected) in tokens.iter().zip(expected_tokens.lines()) {
