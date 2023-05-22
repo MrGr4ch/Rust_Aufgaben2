@@ -38,16 +38,16 @@ pub enum URLToken {
 
 /// Extracts the URL and text from a string that matched a Link token
 fn extract_link_info(lex: &mut Lexer<URLToken>) -> (LinkUrl, LinkText) {
-    println!("gefunden!");
-    let token_slice = lex.slice();
-    println!("{:?}",token_slice);
-    let last_quote = token_slice.rfind('"').unwrap();
-    println!("{:?}",last_quote);
-    let (url, text) = token_slice.split_at(last_quote + 1);  // +1 to exclude the quote itself from the URL
-    let url = url.trim_end_matches('"'); // remove ending quote from URL
-    println!("{:?}",url);
-    let text = text.trim_start_matches(' '); // remove leading whitespace from text
-    println!("{:?}",text);
+    println!("ectract_link_info ausgeführt");
+    let caps: Vec<_> = lex.slice().match_indices('"').collect();
 
-    (LinkUrl(url.parse().unwrap()), LinkText(text.parse().unwrap()))
+    let url_start = caps[0].0 + 1;  // start after first quote
+    let url_end = caps[1].0;  // end at second quote
+    let url = &lex.slice()[url_start..url_end];
+
+    let text_start = caps[1].0 + 2;  // start after the second quote and a '>'
+    let text_end = lex.slice().rfind('<').unwrap();  // end at the last '<'
+    let text = &lex.slice()[text_start..text_end];
+
+    (LinkUrl(url.to_string()), LinkText(text.to_string()))
 }
