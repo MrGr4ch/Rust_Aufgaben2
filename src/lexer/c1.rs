@@ -84,7 +84,7 @@ pub enum C1Token {
     //termvariables
     #[regex("[0-9]+")]
     ConstInt,
-    #[regex(r"[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?")]
+    #[regex("([0-9]*[.][0-9]+)([eE]([-+])?[0-9]+)?|[0-9]+[eE]([+-])?[0-9]+")]
     ConstFloat,
     #[regex("true|false")]
     ConstBoolean,
