@@ -38,7 +38,7 @@ pub enum URLToken {
 
 /// Extracts the URL and text from a string that matched a Link token
 fn extract_link_info(lex: &mut Lexer<URLToken>) -> (LinkUrl, LinkText) {
-    println!("ectract_link_info ausgeführt");
+    println!("extract_link_info ausgeführt");
     let caps: Vec<_> = lex.slice().match_indices('"').collect();
 
     let url_start = caps[0].0 + 1;  // start after first quote
