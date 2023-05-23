@@ -69,8 +69,8 @@ fn extract_link_info(lex: &mut Lexer<URLToken>) -> (LinkUrl, LinkText) {
         println!("({},{})", ope.0, ope.1);
     }*/
 
-    let text_start = close[0].0 + 1;  // start after first quote
-    let text_end = open[1].0;  // end at second quote
+    let text_start = close[close.len()-2].0 + 1;  // start after first quote
+    let text_end = open[open.len()-1].0;  // end at second quote
     text = &lex.slice()[text_start..text_end];
 
     println!("text_done, text = {}", text);
