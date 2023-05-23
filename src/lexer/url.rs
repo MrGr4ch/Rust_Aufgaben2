@@ -25,10 +25,10 @@ impl Display for LinkText {
 
 #[derive(Logos, Debug, PartialEq)]
 pub enum URLToken {
-    #[regex(r#"<a[ \n\t\f\r]*[^>]*href\s*=\s*"([^"]*)"[^>]*>([^<]*)</a[ \n\t\f\r]*>"#, extract_link_info)]
+    #[regex(r#"<a[ \n\t\f\r]*[^h]*href\s*=\s*"([^"]*)"[^>]*>([^<]*)</a[ \n\t\f\r]*>"#, extract_link_info)]
     Link((LinkUrl, LinkText)),
 
-    #[regex(r"[ \t\n\f\r]+", logos::skip)] // Ignore whitespaces
+    #[regex(r"[ \t\n\f\r]+|[^<]+|<[^a]|<a[ \n\t\f\r]*[^h]*", logos::skip)] // Ignore whitespaces
     Ignored,
 
     #[error]
@@ -39,15 +39,42 @@ pub enum URLToken {
 /// Extracts the URL and text from a string that matched a Link token
 fn extract_link_info(lex: &mut Lexer<URLToken>) -> (LinkUrl, LinkText) {
     println!("extract_link_info ausgeführt");
-    let caps: Vec<_> = lex.slice().match_indices('"').collect();
+    let caps = lex.slice().match_indices('"').collect::<Vec<_>>();
+    /*for cap in &caps{
+        println!("({},{})", cap.0, cap.1);
+    }*/
+    let url;
+    let text;
 
+    if lex.slice().find("name") < lex.slice().find("href") {
+        let url_start = caps[2].0 + 1;  // start after first quote
+        let url_end = caps[3].0;  // end at second quote
+        url = &lex.slice()[url_start..url_end];
+    } else {
     let url_start = caps[0].0 + 1;  // start after first quote
     let url_end = caps[1].0;  // end at second quote
-    let url = &lex.slice()[url_start..url_end];
+    url = &lex.slice()[url_start..url_end];
+    }
+    println!("url_done, url = {}", url);
 
-    let text_start = caps[1].0 + 2;  // start after the second quote and a '>'
-    let text_end = lex.slice().rfind('<').unwrap();  // end at the last '<'
-    let text = &lex.slice()[text_start..text_end];
+    let close = lex.slice().match_indices('>').collect::<Vec<_>>();
+    let open = lex.slice().match_indices('<').collect::<Vec<_>>();
 
+    /*println!("printing close");
+    for clo in &close{
+        println!("({},{})", clo.0, clo.1);
+    }
+    println!("printing open");
+    for ope in &open{
+        println!("({},{})", ope.0, ope.1);
+    }*/
+
+    let text_start = close[0].0 + 1;  // start after first quote
+    let text_end = open[1].0;  // end at second quote
+    text = &lex.slice()[text_start..text_end];
+
+    println!("text_done, text = {}", text);
+
+    println!("URl = {}, Text = {}", url, text);
     (LinkUrl(url.to_string()), LinkText(text.to_string()))
 }
