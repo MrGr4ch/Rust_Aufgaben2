@@ -25,7 +25,7 @@ impl Display for LinkText {
 
 #[derive(Logos, Debug, PartialEq)]
 pub enum URLToken {
-    #[regex(r#"<a[ \n\t\f\r]*[^h]*href\s*=\s*"([^"]*)"[^>]*>([^<]*)</a[ \n\t\f\r]*>"#, extract_link_info)]
+    #[regex(r#"<a[ \n\t\f\r]*[^h]*href="([^"]*)"[^>]*>([^<]*)</a[ \n\t\f\r]*>"#, extract_link_info)]
     Link((LinkUrl, LinkText)),
 
     #[regex(r"[ \t\n\f\r]+|[^<]+|<[^a]|<a[ \n\t\f\r]*[^h]*", logos::skip)] // Ignore whitespaces
